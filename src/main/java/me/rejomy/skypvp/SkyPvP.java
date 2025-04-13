@@ -6,7 +6,6 @@ import me.rejomy.skypvp.command.CreateTeleport;
 import me.rejomy.skypvp.command.RTPIsland;
 import me.rejomy.skypvp.listener.ConnectionListener;
 import me.rejomy.skypvp.listener.EntityDamageListener;
-import me.rejomy.skypvp.listener.ExplodeListener;
 import me.rejomy.skypvp.listener.InteractListener;
 import me.rejomy.skypvp.manager.UserManager;
 import me.rejomy.skypvp.util.EconomyManager;
@@ -41,7 +40,6 @@ public class SkyPvP extends JavaPlugin {
 
     private void initListeners() {
         registerListener(new ConnectionListener());
-        registerListener(new ExplodeListener());
         registerListener(new EntityDamageListener());
         registerListener(new InteractListener());
     }
