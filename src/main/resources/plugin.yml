@@ -1,0 +1,15 @@
+name: SkyPvP
+version: 1
+main: me.rejomy.skypvp.SkyPvP
+commands:
+  buildarea:
+    permission: buildarea.command
+    permission-message: "You dont have buildarea.command permission!"
+  createteleport:
+    permission: nmsp.teleport
+  buyernmsp:
+  rtpisland:
+depend:
+  - packetevents
+softdepend:
+  - worldguard
