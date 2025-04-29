@@ -12,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
 import java.util.Set;
@@ -28,10 +29,10 @@ public class InteractListener implements Listener {
         }
 
         if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
-            ItemStack item = player.getItemInHand();
+            ItemStack item = player.getInventory().getItemInMainHand();
 
             // NETHER_STAR logic
-            if (item != null && item.getType() == Material.NETHER_STAR) {
+            if (item.getType() == Material.NETHER_STAR) {
                 TNTPrimed tnt = player.getWorld().spawn(player.getLocation(), TNTPrimed.class);
                 tnt.setFuseTicks(-1);
                 SkyPvP.getInstance().getUserManager().getTntOwners().add(player);
@@ -39,21 +40,22 @@ public class InteractListener implements Listener {
                 if (player.getGameMode() != GameMode.CREATIVE) {
                     ItemUtil.removeItem(player, Material.NETHER_STAR);
                 }
+                
                 return;
             }
 
             // Soup / Stew healing logic
-            Material type = item != null ? item.getType() : null;
-            if ((type == Material.MUSHROOM_STEM || type == Material.RABBIT_STEW) && player.getHealth() < player.getMaxHealth()) {
-                item.setType(Material.BOWL);
-
+            Material type = item.getType();
+            if ((type == Material.MUSHROOM_STEW || type == Material.RABBIT_STEW) && player.getHealth() < player.getHealthScale()) {
+                ItemMeta itemMeta = item.getItemMeta().clone();
+                item = new ItemStack(Material.BOWL, item.getAmount());
+                item.setItemMeta(itemMeta);
+                player.getInventory().setItemInMainHand(item);
                 double healAmount = 4.0;
-                double newHealth = Math.min(player.getHealth() + healAmount, player.getMaxHealth());
+                double newHealth = Math.min(player.getHealth() + healAmount, player.getHealthScale());
                 player.setHealth(newHealth);
-
-                event.setCancelled(true);
                 player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1.0f, 1.0f);
-                player.getInventory().setHeldItemSlot(player.getInventory().getHeldItemSlot());
+                event.setCancelled(true);
             }
 
         } else if (action == Action.PHYSICAL) {
