@@ -1,5 +1,6 @@
 name: SkyPvP
 version: 1
+api-version: 1.21
 main: me.rejomy.skypvp.SkyPvP
 commands:
   buildarea:

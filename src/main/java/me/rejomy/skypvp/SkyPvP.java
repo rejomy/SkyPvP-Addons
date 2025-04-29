@@ -7,10 +7,10 @@ import me.rejomy.skypvp.command.RTPIsland;
 import me.rejomy.skypvp.listener.ConnectionListener;
 import me.rejomy.skypvp.listener.EntityDamageListener;
 import me.rejomy.skypvp.listener.InteractListener;
+import me.rejomy.skypvp.listener.TitanFlyingFeatureListener;
 import me.rejomy.skypvp.manager.UserManager;
 import me.rejomy.skypvp.util.EconomyManager;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -28,9 +28,9 @@ public class SkyPvP extends JavaPlugin {
 
         saveDefaultConfig();
 
-        getCommand("buyernmsp").setExecutor((CommandExecutor)new BuyerNMSP());
-        getCommand("createteleport").setExecutor((CommandExecutor)new CreateTeleport());
-        getCommand("rtpisland").setExecutor((CommandExecutor)new RTPIsland());
+        getCommand("buyernmsp").setExecutor(new BuyerNMSP());
+        getCommand("createteleport").setExecutor(new CreateTeleport());
+        getCommand("rtpisland").setExecutor(new RTPIsland());
 
         EconomyManager.init();
 
@@ -42,6 +42,7 @@ public class SkyPvP extends JavaPlugin {
         registerListener(new ConnectionListener());
         registerListener(new EntityDamageListener());
         registerListener(new InteractListener());
+        registerListener(new TitanFlyingFeatureListener());
     }
 
     private void initManagers() {

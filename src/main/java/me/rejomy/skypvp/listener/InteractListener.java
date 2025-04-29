@@ -44,7 +44,7 @@ public class InteractListener implements Listener {
 
             // Soup / Stew healing logic
             Material type = item != null ? item.getType() : null;
-            if ((type == Material.MUSHROOM_SOUP || type == Material.RABBIT_STEW) && player.getHealth() < player.getMaxHealth()) {
+            if ((type == Material.MUSHROOM_STEM || type == Material.RABBIT_STEW) && player.getHealth() < player.getMaxHealth()) {
                 item.setType(Material.BOWL);
 
                 double healAmount = 4.0;
@@ -52,7 +52,7 @@ public class InteractListener implements Listener {
                 player.setHealth(newHealth);
 
                 event.setCancelled(true);
-                player.playSound(player.getLocation(), Sound.BURP, 1.0f, 1.0f);
+                player.playSound(player.getLocation(), Sound.ENTITY_PLAYER_BURP, 1.0f, 1.0f);
                 player.getInventory().setHeldItemSlot(player.getInventory().getHeldItemSlot());
             }
 
